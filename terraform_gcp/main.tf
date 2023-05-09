@@ -82,7 +82,7 @@ resource "null_resource" "get_kubeconfig" {
 
 resource "local_file" "kubeconfiggke" {
   depends_on = [null_resource.get_kubeconfig]
-  content    = file("./kubeconfig")
+  content    = file("${path.module}/kubeconfig")
   filename   = "${path.module}/kubeconfig"
 }
 
