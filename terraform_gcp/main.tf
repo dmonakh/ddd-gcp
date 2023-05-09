@@ -84,3 +84,7 @@ output "cluster_credentials" {
   value     = google_container_cluster.k8s_cluster.master_auth
   sensitive = true
 }
+resource "local_file" "kubeconfig" {
+  content  = google_container_cluster.k8s_cluster.master_auth[0].kubeconfig
+  filename = "${path.module}/kubeconfig"
+}
