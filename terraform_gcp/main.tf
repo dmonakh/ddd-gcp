@@ -75,14 +75,6 @@ resource "google_container_cluster" "k8s_cluster" {
   ]
 }
 
-output "cluster_endpoint" {
-  value = google_container_cluster.k8s_cluster.endpoint
-}
-
-output "cluster_credentials" {
-  value     = google_container_cluster.k8s_cluster.master_auth
-  sensitive = true
-}
 data "google_container_cluster" "k8s_cluster" {
   name     = "${var.def_name}-clusterk8s"
   location = var.region_prj
@@ -90,5 +82,14 @@ data "google_container_cluster" "k8s_cluster" {
 
 resource "local_file" "kubeconfiggke" {
   content  = data.google_container_cluster.k8s_cluster.kube_config[0].content
-  filename = "${path.module}/kubeconfig_gke"
+  filename = "./kubeconfig_gke"
+}
+
+output "cluster_endpoint" {
+  value = google_container_cluster.k8s_cluster.endpoint
+}
+
+output "cluster_credentials" {
+  value     = google_container_cluster.k8s_cluster.master_auth
+  sensitive = true
 }
