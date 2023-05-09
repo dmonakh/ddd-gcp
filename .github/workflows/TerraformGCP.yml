@@ -48,6 +48,11 @@ jobs:
           else
             echo "===[ Bucket already exists ]==="
           fi
+
+      - name: Install gke-gcloud-auth-plugin
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
           
       - name: terraform init
         run: terraform init
@@ -94,8 +99,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: kubeconfig
-        path: terraform_gcp
-    
+        path: terraform_gcp 
 
     - name: Check Services/Pods/Deployment Before Deploy
       run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
