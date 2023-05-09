@@ -74,20 +74,6 @@ resource "google_container_cluster" "k8s_cluster" {
     google_compute_subnetwork.vpc_subnetwork
   ]
 }
-resource "null_resource" "get_kubeconfig" {
-  provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${var.def_name}-clusterk8s --region ${var.region_prj} --project ${var.project_id} && cp ~/.kube/config ${path.module}/kubeconfig"
-  }
-
-  triggers = {
-    kubeconfig_file = "${path.module}/kubeconfig"
-  }
-}
-resource "local_file" "kubeconfiggke" {
-  depends_on = [null_resource.get_kubeconfig]
-  content    = file(null_resource.get_kubeconfig.triggers.kubeconfig_file)
-  filename   = "${path.module}/kubeconfig"
-}
 output "cluster_endpoint" {
   value = google_container_cluster.k8s_cluster.endpoint
 }
