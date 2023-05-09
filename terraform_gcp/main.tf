@@ -74,17 +74,6 @@ resource "google_container_cluster" "k8s_cluster" {
     google_compute_subnetwork.vpc_subnetwork
   ]
 }
-
-data "google_container_cluster" "k8s_cluster" {
-  name     = "${var.def_name}-clusterk8s"
-  location = var.region_prj
-}
-
-resource "local_file" "kubeconfiggke" {
-  content  = data.google_container_cluster.k8s_cluster.kube_config[0].content
-  filename = "./kubeconfig_gke"
-}
-
 output "cluster_endpoint" {
   value = google_container_cluster.k8s_cluster.endpoint
 }
