@@ -74,14 +74,16 @@ resource "google_container_cluster" "k8s_cluster" {
     google_compute_subnetwork.vpc_subnetwork
   ]
 }
-data "google_container_cluster" "k8s_cluster" {
-  name     = "${var.def_name}-clusterk8s"
-  location = var.region_prj
+resource "null_resource" "get_kubeconfig" {
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${var.def_name}-clusterk8s --region ${var.region_prj} --project ${var.project_id} && cp ~/.kube/config ./kubeconfig"
+  }
 }
 
 resource "local_file" "kubeconfiggke" {
-  content  = data.google_container_cluster.k8s_cluster.kube_config[0].content
-  filename = "${path.module}/kubeconfig"
+  depends_on = [null_resource.get_kubeconfig]
+  content    = file("./kubeconfig")
+  filename   = "${path.module}/kubeconfig"
 }
 
 output "cluster_endpoint" {
