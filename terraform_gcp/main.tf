@@ -76,7 +76,7 @@ resource "google_container_cluster" "k8s_cluster" {
 }
 resource "null_resource" "get_kubeconfig" {
   provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${var.def_name}-clusterk8s --region ${var.region_prj} --project ${var.project_id} && cp ~/.kube/config ./kubeconfig"
+    command = "gcloud container clusters get-credentials ${var.def_name}-clusterk8s --region ${var.region_prj} --project ${var.project_id} && cp ~/.kube/config ${path.module}/kubeconfig"
   }
 }
 
