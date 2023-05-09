@@ -49,9 +49,9 @@ jobs:
             echo "===[ Bucket already exists ]==="
           fi
 
-      - name: Install gke-gcloud-auth-plugin
-        run: |
-          gcloud components install gke-gcloud-auth-plugin
+      # - name: Install gke-gcloud-auth-plugin
+      #   run: |
+      #     gcloud components install gke-gcloud-auth-plugin
           
       - name: terraform init
         run: terraform init
