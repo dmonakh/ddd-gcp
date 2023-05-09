@@ -31,15 +31,6 @@ resource "google_compute_network" "vpc_network" {
   name                    = "${var.def_name}-network"
   auto_create_subnetworks = false
 }
-
-resource "local_file" "kubeconfig" {
-  filename = "${path.module}/kubeconfig"
-  content  = join("", [
-    google_container_cluster.k8s_cluster.kube_master_auth[0].client_certificate,
-    google_container_cluster.k8s_cluster.kube_master_auth[0].client_key,
-    google_container_cluster.k8s_cluster.kube_master_auth[0].cluster_ca_certificate
-  ])
-}
 resource "google_container_cluster" "k8s_cluster" {
   name               = "${var.def_name}-clusterk8s"
   location           = var.region_prj
