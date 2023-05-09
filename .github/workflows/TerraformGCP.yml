@@ -51,9 +51,9 @@ jobs:
 
       - name: Install gke-gcloud-auth-plugin
         run: |
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 54A647F9048D5688D7DA2ABE6A030B21BA07F4FB
           curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B53DC80D13EDEF0
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
           sudo apt-get update && sudo apt-get install google-cloud-sdk
           
       - name: terraform init
