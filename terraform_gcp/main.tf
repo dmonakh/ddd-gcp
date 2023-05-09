@@ -83,11 +83,12 @@ output "cluster_credentials" {
   value     = google_container_cluster.k8s_cluster.master_auth
   sensitive = true
 }
+data "google_container_cluster" "k8s_cluster" {
+  name     = "${var.def_name}-clusterk8s"
+  location = var.region_prj
+}
 
-module "gke_kubeconfig" {
-  source  = "GoogleCloudPlatform/kubeconfig/google"
-  version = "0.3.0"
-
-  project_id  = var.project_id
-  cluster_name = google_container_cluster.k8s_cluster.name
+resource "local_file" "kubeconfiggke" {
+  content  = data.google_container_cluster.k8s_cluster.kube_config[0].content
+  filename = "${path.module}/kubeconfig_gke"
 }
