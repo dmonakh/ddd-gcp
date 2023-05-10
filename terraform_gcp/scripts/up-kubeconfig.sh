@@ -4,7 +4,7 @@
 # gcloud components update
 # sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
 curl https://sdk.cloud.google.com | bash
-exec -l $SHELL
+source ~/.bashrc
 gcloud init
 gcloud components install kubectl
 
