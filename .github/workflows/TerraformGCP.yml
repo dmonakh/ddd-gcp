@@ -42,11 +42,11 @@ jobs:
           gcloud auth activate-service-account --key-file=credentials_file.json
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud@v0.3.0
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          credential_file: ${{ github.workspace }}/credentials_file.json
+      # - name: Setup gcloud
+      #   uses: google-github-actions/setup-gcloud@v0.3.0
+      #   with:
+      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
+      #     credential_file: ${{ github.workspace }}/credentials_file.json
 
       - name: Create bucket if dosn't exists
         run: |
@@ -95,8 +95,8 @@ jobs:
     - name: Clon Rep
       uses: actions/checkout@v3
 
-    - name: Setup kubectl
-      run: gcloud components install kubectl
+    - name: Install kubectl
+      run: sudo apt-get install kubectl
 
     - name: Download kubeconfig
       uses: actions/download-artifact@v3
