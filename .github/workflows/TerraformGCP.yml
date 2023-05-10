@@ -101,8 +101,14 @@ jobs:
         exec -l $SHELL
         gcloud components install beta
 
-    - name: Install gke-gcloud-auth-plugin
-      run: gcloud components install gke-gcloud-auth-plugin
+    - name: Authenticate with Google Cloud
+      run: |
+        gcloud config set account ${SA_NAME}
+        gcloud auth activate-service-account --key-file=credentials_file.json
+        gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
+    # - name: Install gke-gcloud-auth-plugin
+    #   run: gcloud components install gke-gcloud-auth-plugin
 
     - name: Install kubectl
       run: |
