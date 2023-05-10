@@ -67,11 +67,11 @@ jobs:
           SCRIPT_DIR: ${{ github.workspace }}/terraform_gcp/scripts
         run: bash  $SCRIPT_DIR/up-kubeconfig.sh
     
-      # - name: Upload kubeconfig artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: kubeconfig
-      #     path: terraform_gcp/kubeconfig
+      - name: Upload kubeconfig artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: kubeconfig
+          path: terraform_gcp/kubeconfig
 
       - name: Terraform Destroy
         if: contains(github.event.head_commit.message, 'destroy')
