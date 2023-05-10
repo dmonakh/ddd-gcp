@@ -100,8 +100,8 @@ jobs:
         name: kubeconfig
         path: terraform_gcp 
 
-    - name: Check Services/Pods/Deployment Before Deploy
-      run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
+    # - name: Check Services/Pods/Deployment Before Deploy
+    #   run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
 
     - name: Apply Kubernetes manifest
       run: kubectl apply -f mysql.yml
