@@ -95,6 +95,15 @@ jobs:
     - name: Clon Rep
       uses: actions/checkout@v3
 
+    - name: Install Google Cloud SDK
+      run: |
+        curl https://sdk.cloud.google.com | bash
+        exec -l $SHELL
+        gcloud components install beta
+
+    - name: Install gke-gcloud-auth-plugin
+      run: gcloud components install gke-gcloud-auth-plugin
+
     - name: Install kubectl
       run: |
         echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
