@@ -61,14 +61,14 @@ jobs:
         if: "!contains(github.event.head_commit.message, 'destroy')"
         run: terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -auto-approve
 
-      - name: Get kubeconfig 
-        run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
+      # - name: Get kubeconfig 
+      #   run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
     
-      - name: Upload kubeconfig artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: kubeconfig
-          path: terraform_gcp/kubeconfig
+      # - name: Upload kubeconfig artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: kubeconfig
+      #     path: terraform_gcp/kubeconfig
 
       - name: Terraform Destroy
         if: contains(github.event.head_commit.message, 'destroy')
@@ -103,8 +103,8 @@ jobs:
         gcloud auth activate-service-account --key-file=credentials_file.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-    # - name: Install gke-gcloud-auth-plugin
-    #   run: gcloud components install gke-gcloud-auth-plugin
+    - name: Get kubeconfig 
+      run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
 
     - name: Install kubectl
       run: |
@@ -113,11 +113,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y kubectl
 
-    - name: Download kubeconfig
-      uses: actions/download-artifact@v3
-      with:
-        name: kubeconfig
-        path: terraform_gcp 
+    # - name: Download kubeconfig
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: kubeconfig
+    #     path: terraform_gcp 
 
     - name: Check Services/Pods/Deployment Before Deploy
       run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
