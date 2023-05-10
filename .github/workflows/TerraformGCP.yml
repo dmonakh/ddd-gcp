@@ -64,7 +64,7 @@ jobs:
 
       - name: Get kubeconfig
         run: |
-          gcloud components install gke-gcloud-auth
+          gcloud auth login
           gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
         # env:
         #   SCRIPT_DIR: ${{ github.workspace }}/terraform_gcp/scripts
