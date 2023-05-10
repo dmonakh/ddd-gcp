@@ -7,6 +7,8 @@ curl https://sdk.cloud.google.com | bash
 exec -l $SHELL
 gcloud init
 gcloud components install kubectl
-gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=$ARM_PROJECT_ID
-mv ~/.kube/config terraform_gcp/kubeconfig
+
+
+# gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=$ARM_PROJECT_ID
+# mv ~/.kube/config terraform_gcp/kubeconfig
 ls terraform_gcp
