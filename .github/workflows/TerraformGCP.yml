@@ -46,8 +46,8 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0.3.0
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: credentials_file.json
-          
+          credential_file: ${{ github.workspace }}/credentials_file.json
+
       - name: Create bucket if dosn't exists
         run: |
           if [[ $(gsutil ls gs://${BUCKET_NAME} >/dev/null; echo $?) -eq 1 ]]; then
