@@ -35,10 +35,9 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-          credentials_file: credentials_file.json
 
-      # - name: Set GCP Credentials Path
-      #   run: echo "$GCP_CREDENTIALS_PATH" > credentials_file.json
+      - name: Create credentials file
+        run: echo "${{ secrets.GCP_CREDENTIALS }}" > credentials.json
 
       # - name: Create bucket if dosn't exists
       #   run: |
