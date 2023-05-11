@@ -101,9 +101,6 @@ jobs:
       
     - name: Setup gcloud CLI
       uses: google-github-actions/setup-gcloud@v1
-      with:
-        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
       
       # with:
       #   service_account_key: ./credentials_file.json
@@ -136,8 +133,8 @@ jobs:
     #     sudo apt-get update
     #     sudo apt-get install -y kubectl
 
-    # - name: Get kubeconfig 
-    #   run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
+    - name: Get kubeconfig 
+      run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
 
     - name: versoin
       run: kubectl version
