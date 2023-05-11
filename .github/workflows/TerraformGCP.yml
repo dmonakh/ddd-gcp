@@ -139,8 +139,8 @@ jobs:
     # - name: Get kubeconfig 
     #   run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
 
-    # - name: versoin
-    #   run: kubectl version
+    - name: versoin
+      run: kubectl version
 
 
     # - name: Download kubeconfig
