@@ -22,7 +22,7 @@ spec:
     metadata:
       labels:
         app: mysql
-    spec:  # Добавлен отступ для блока spec
+    spec:  
       volumes:
         - name: mysql-storage
           persistentVolumeClaim:
