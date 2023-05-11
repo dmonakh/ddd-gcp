@@ -99,11 +99,15 @@ jobs:
       #   credentials_json: ./credentials_file.json
       #   project_id: ${{ secrets.GCP_PROJECT_ID }}
       
-    # - name: Setup gcloud CLI
-    #   uses: google-github-actions/setup-gcloud@v1
-    #   with:
-    #     service_account_key: ./credentials_file.json
-    #     project_id: ${{ secrets.GCP_PROJECT_ID }}
+    - name: Setup gcloud CLI
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+      
+      # with:
+      #   service_account_key: ./credentials_file.json
+      #   project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     # - name: Install Google Cloud SDK
     #   run: |
