@@ -11,5 +11,5 @@ provider "google" {
   project = var.project_id
   region  = var.region_prj
   zone    = var.zone_prj
-  credentials = "${file("${env.TF_VAR_GCP_CREDENTIALS}")}"
+  credentials = var.gcp_credentials
 }
