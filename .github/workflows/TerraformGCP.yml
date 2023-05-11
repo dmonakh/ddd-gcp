@@ -103,15 +103,12 @@ jobs:
         gcloud auth activate-service-account --key-file=credentials_file.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-    - name: Install gke-gcloud-auth-plugin
-      run: |
-        sudo apt-get install apt-transport-https ca-certificates gnupg
-        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-        sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
-
-    - name: Get kubeconfig 
-      run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
+    # - name: Install gke-gcloud-auth-plugin
+    #   run: |
+    #     sudo apt-get install apt-transport-https ca-certificates gnupg
+    #     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+    #     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+    #     sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
 
     - name: Install kubectl
       run: |
@@ -120,51 +117,57 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y kubectl
 
+    - name: Get kubeconfig 
+      run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
+
+    - name: kubectl versoin
+      run: kubectl version
+
     # - name: Download kubeconfig
     #   uses: actions/download-artifact@v3
     #   with:
     #     name: kubeconfig
     #     path: terraform_gcp 
 
-    - name: Check Services/Pods/Deployment Before Deploy
-      run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
+    # - name: Check Services/Pods/Deployment Before Deploy
+    #   run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
 
-    - name: Apply Kubernetes manifest
-      run: kubectl apply -f mysql.yml
+    # - name: Apply Kubernetes manifest
+    #   run: kubectl apply -f mysql.yml
 
-    - name: Wait for 80 seconds()
-      run: sleep 80s
+    # - name: Wait for 80 seconds()
+    #   run: sleep 80s
 
-    - name: Check Mysql Pods
-      run: kubectl exec -i $(kubectl get pod -l "app=mysql" -o jsonpath='{.items[0].metadata.name}') -- mysql -u root -p1234 -e "SHOW DATABASES;"
+    # - name: Check Mysql Pods
+    #   run: kubectl exec -i $(kubectl get pod -l "app=mysql" -o jsonpath='{.items[0].metadata.name}') -- mysql -u root -p1234 -e "SHOW DATABASES;"
 
-    - name: Create DB/Tables
-      env:
-        SCRIPT_DIR: ${{ github.workspace }}/terraform_gcp/scripts
-      run: bash  $SCRIPT_DIR/mysql.sh
+    # - name: Create DB/Tables
+    #   env:
+    #     SCRIPT_DIR: ${{ github.workspace }}/terraform_gcp/scripts
+    #   run: bash  $SCRIPT_DIR/mysql.sh
 
-    - name: Wait for 20 seconds()
-      run: sleep 20s
+    # - name: Wait for 20 seconds()
+    #   run: sleep 20s
 
-    - name: Delete Mysql
-      run: kubectl delete service mysql && kubectl delete pods --selector app=mysql && kubectl delete deployment mysql
+    # - name: Delete Mysql
+    #   run: kubectl delete service mysql && kubectl delete pods --selector app=mysql && kubectl delete deployment mysql
 
-    - name: Wait for 10 seconds()
-      run: sleep 10s
+    # - name: Wait for 10 seconds()
+    #   run: sleep 10s
 
-    - name: Check Services/Pods/Deployments after Delete
-      run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
+    # - name: Check Services/Pods/Deployments after Delete
+    #   run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
 
 
 
-    - name: Apply Kubernetes manifest after Delete
-      run: kubectl apply -f mysql.yml
+    # - name: Apply Kubernetes manifest after Delete
+    #   run: kubectl apply -f mysql.yml
 
-    - name: Wait for 80 seconds()
-      run: sleep 80s
+    # - name: Wait for 80 seconds()
+    #   run: sleep 80s
 
-    - name: Check Services/Pods/Deployments after repeated Deploy
-      run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
+    # - name: Check Services/Pods/Deployments after repeated Deploy
+    #   run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
 
-    - name: Check Mysql Pods after repeated Deploy
-      run: kubectl exec -i $(kubectl get pod -l "app=mysql" -o jsonpath='{.items[0].metadata.name}') -- mysql -u root -p1234 -e "SHOW DATABASES;"
+    # - name: Check Mysql Pods after repeated Deploy
+    #   run: kubectl exec -i $(kubectl get pod -l "app=mysql" -o jsonpath='{.items[0].metadata.name}') -- mysql -u root -p1234 -e "SHOW DATABASES;"
