@@ -31,15 +31,21 @@ jobs:
           terraform_version: latest
           terraform_wrapper: false
 
+      - name: Decode credentials
+        run: echo "${{ secrets.GCP_CREDENTIALS }}" | base64 -d > credentials_file.json
+
       # - name: Authenticate to Google Cloud
       #   uses: google-github-actions/auth@v1
       #   with:
+      #     credentials_json: credentials_file.jso
+
+      #   with:
       #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      - name: Create credentials file
-        run: |
-          echo "${{ secrets.GCP_CREDENTIALS }}" > credentials_file.json
-          cat credentials_file.json
+      # - name: Create credentials file
+      #   run: |
+      #     echo "${{ secrets.GCP_CREDENTIALS }}" > credentials_file.json
+      #     cat credentials_file.json
 
       - name: Authenticate with Google Cloud
         run: |
@@ -47,14 +53,14 @@ jobs:
           gcloud auth activate-service-account --key-file=credentials_file.json
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-      # - name: Create bucket if dosn't exists
-      #   run: |
-      #     if [[ $(gsutil ls gs://${BUCKET_NAME} >/dev/null; echo $?) -eq 1 ]]; then
-      #       echo "===[ Bucket doesn't exist. Creating... ]==="
-      #       gsutil mb -l us-central1 -c Standard -p ${{ secrets.GCP_PROJECT_ID }} -b off gs://${BUCKET_NAME}
-      #     else
-      #       echo "===[ Bucket already exists ]==="
-      #     fi
+      - name: Create bucket if dosn't exists
+        run: |
+          if [[ $(gsutil ls gs://${BUCKET_NAME} >/dev/null; echo $?) -eq 1 ]]; then
+            echo "===[ Bucket doesn't exist. Creating... ]==="
+            gsutil mb -l us-central1 -c Standard -p ${{ secrets.GCP_PROJECT_ID }} -b off gs://${BUCKET_NAME}
+          else
+            echo "===[ Bucket already exists ]==="
+          fi
           
       - name: terraform init
         run: terraform init
