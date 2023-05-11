@@ -37,7 +37,7 @@ jobs:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Set GCP Credentials Path
-        run: echo "$GCP_CREDENTIALS_PATH" > gcp_credentials_path.txt
+        run: echo "$GCP_CREDENTIALS_PATH" > credentials_file.json
 
       # - name: Create bucket if dosn't exists
       #   run: |
