@@ -35,15 +35,15 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-          
-      - name: Create bucket if dosn't exists
-        run: |
-          if [[ $(gsutil ls gs://${BUCKET_NAME} >/dev/null; echo $?) -eq 1 ]]; then
-            echo "===[ Bucket doesn't exist. Creating... ]==="
-            gsutil mb -l us-central1 -c Standard -p ${{ secrets.GCP_PROJECT_ID }} -b off gs://${BUCKET_NAME}
-          else
-            echo "===[ Bucket already exists ]==="
-          fi
+
+      # - name: Create bucket if dosn't exists
+      #   run: |
+      #     if [[ $(gsutil ls gs://${BUCKET_NAME} >/dev/null; echo $?) -eq 1 ]]; then
+      #       echo "===[ Bucket doesn't exist. Creating... ]==="
+      #       gsutil mb -l us-central1 -c Standard -p ${{ secrets.GCP_PROJECT_ID }} -b off gs://${BUCKET_NAME}
+      #     else
+      #       echo "===[ Bucket already exists ]==="
+      #     fi
           
       - name: terraform init
         run: terraform init
