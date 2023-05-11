@@ -91,11 +91,17 @@ jobs:
     - name: Decode credentials
       run: echo "${{ secrets.GCP_CREDENTIALS }}" | base64 -d > credentials_file.json
 
-    - name: Setup gcloud CLI
-      uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
       with:
         service_account_key: ./credentials_file.json
         project_id: ${{ secrets.GCP_PROJECT_ID }}
+      
+    # - name: Setup gcloud CLI
+    #   uses: google-github-actions/setup-gcloud@v1
+    #   with:
+    #     service_account_key: ./credentials_file.json
+    #     project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     # - name: Install Google Cloud SDK
     #   run: |
