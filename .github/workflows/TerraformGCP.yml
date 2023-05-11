@@ -36,6 +36,9 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
+      - name: Set GCP Credentials Path
+        run: echo "$GCP_CREDENTIALS_PATH" > gcp_credentials_path.txt
+
       # - name: Create bucket if dosn't exists
       #   run: |
       #     if [[ $(gsutil ls gs://${BUCKET_NAME} >/dev/null; echo $?) -eq 1 ]]; then
