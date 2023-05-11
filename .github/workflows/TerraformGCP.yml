@@ -95,13 +95,14 @@ jobs:
       run: |
         curl https://sdk.cloud.google.com | bash
         exec -l $SHELL
-        gcloud components install beta
+        gcloud components install 
 
     - name: Authenticate with Google Cloud
       run: |
         gcloud config set account ${SA_NAME}
         gcloud auth activate-service-account --key-file=credentials_file.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
 
     # - name: Install gke-gcloud-auth-plugin
     #   run: |
@@ -117,8 +118,8 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y kubectl
 
-    - name: Get kubeconfig 
-      run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
+    # - name: Get kubeconfig 
+    #   run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
 
     - name: versoin
       run: gcloud version
