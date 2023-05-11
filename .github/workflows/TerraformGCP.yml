@@ -120,8 +120,9 @@ jobs:
     - name: Get kubeconfig 
       run: gcloud container clusters get-credentials mondyspout-clusterk8s --region=us-central1 --project=${{ secrets.GCP_PROJECT_ID }}
 
-    - name: kubectl versoin
-      run: kubectl version
+    - name: versoin
+      run: gcloud version
+
 
     # - name: Download kubeconfig
     #   uses: actions/download-artifact@v3
