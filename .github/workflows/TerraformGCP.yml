@@ -148,6 +148,11 @@ jobs:
     - name: versoin
       run: kubectl version
 
+    - name: test kubectk
+      run: |
+        kubectl get version
+        kubectl get nodes
+        kubectl get services
 
     # - name: Download kubeconfig
     #   uses: actions/download-artifact@v3
