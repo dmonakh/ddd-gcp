@@ -31,13 +31,19 @@ jobs:
           terraform_version: latest
           terraform_wrapper: false
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      # - name: Authenticate to Google Cloud
+      #   uses: google-github-actions/auth@v1
+      #   with:
+      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Create credentials file
         run: echo "${{ secrets.GCP_CREDENTIALS }}" > credentials.json
+
+      - name: Authenticate with Google Cloud
+        run: |
+          gcloud config set account ${SA_NAME}
+          gcloud auth activate-service-account --key-file=credentials_file.json
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
       # - name: Create bucket if dosn't exists
       #   run: |
