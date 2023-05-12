@@ -142,5 +142,3 @@ jobs:
 
     - name: Check Mysql Pods after repeated Deploy
       run: kubectl exec -i $(kubectl get pod -l "app=mysql" -o jsonpath='{.items[0].metadata.name}') -- mysql -u root -p1234 -e "SHOW DATABASES;"
-
-      
