@@ -1,23 +1,23 @@
-resource "google_service_account" "service_account" {
-  account_id   = "${var.def_name}-${var.sa_name}"
-  display_name = "${var.def_name}-${var.sa_name}"
-  disabled     = false
-  project      = var.project_id
-}
+# resource "google_service_account" "service_account" {
+#   account_id   = "${var.def_name}-${var.sa_name}"
+#   display_name = "${var.def_name}-${var.sa_name}"
+#   disabled     = false
+#   project      = var.project_id
+# }
 
-resource "google_project_iam_binding" "bind_roles" {
-  project = var.project_id
-  for_each = toset("${var.roles_list}")
-  role     = each.key
+# resource "google_project_iam_binding" "bind_roles" {
+#   project = var.project_id
+#   for_each = toset("${var.roles_list}")
+#   role     = each.key
 
-  members = [
-    "serviceAccount:${google_service_account.service_account.email}"
-  ]
+#   members = [
+#     "serviceAccount:${google_service_account.service_account.email}"
+#   ]
 
-  depends_on = [
-    google_service_account.service_account
-  ]
-}
+#   depends_on = [
+#     google_service_account.service_account
+#   ]
+# }
 
 resource "google_compute_subnetwork" "vpc_subnetwork" {
   name                     = "${var.def_name}-subnetwork-${var.zone_prj}"
