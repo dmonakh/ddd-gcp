@@ -91,7 +91,7 @@ jobs:
       run: bash  $SCRIPT_DIR/gcloud-auth-plugin.sh
 
     - name: Get kubeconfig 
-      run: gcloud container clusters get-credentials $CLUSTER_NAME --region=$REGION--project=${{ secrets.GCP_PROJECT_ID }}
+      run: gcloud container clusters get-credentials $CLUSTER_NAME --region=$REGION --project=${{ secrets.GCP_PROJECT_ID }}
 
     - name: Check Services/Pods/Deployment Before Deploy
       run: echo "This is Services" && kubectl get service && echo "This is PODS" &&kubectl get pods  && echo "This is Deployments" && kubectl get  deployment
