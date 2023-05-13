@@ -1,8 +1,8 @@
  #!/bin/bash
 
-curl https://sdk.cloud.google.com | bash
-exec -l $SHELL
-gcloud components install beta
+# curl https://sdk.cloud.google.com | bash
+# exec -l $SHELL
+# gcloud components install beta
 
 REPO_URL="https://packages.cloud.google.com/apt"
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] $REPO_URL cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list >/dev/null
