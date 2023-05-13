@@ -52,7 +52,7 @@ jobs:
       - name: terraform init
         run: terraform init
 
-      - name: terraform plan
+      - name: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
         id: plan
         run: terraform plan
       
