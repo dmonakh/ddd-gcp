@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 
 env:
+  ARM_GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   BUCKET_NAME: mondybucketgcp
   SA_NAME: git-490@tidy-vent-384809.iam.gserviceaccount.com 
 
@@ -35,24 +36,15 @@ jobs:
         run: echo "${{ secrets.GCP_CREDENTIALS }}" | base64 -d > credentials_file.json
 
       - name: Authenticate with Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: credentials_file.json
-
-      # - name: Authenticate with Google Cloud
-      #   run: |
-      #     gcloud config set account ${SA_NAME}
-      #     gcloud auth activate-service-account --key-file=credentials_file.json
-      #     gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          gcloud config set account ${SA_NAME}
+          gcloud auth activate-service-account --key-file=credentials_file.json
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Create bucket if dosn't exists
-        run: |
-          if [[ $(gsutil ls gs://${BUCKET_NAME} >/dev/null; echo $?) -eq 1 ]]; then
-            echo "===[ Bucket doesn't exist. Creating... ]==="
-            gsutil mb -l us-central1 -c Standard -p ${{ secrets.GCP_PROJECT_ID }} -b off gs://${BUCKET_NAME}
-          else
-            echo "===[ Bucket already exists ]==="
-          fi
+        env:
+          SCRIPT_DIR: ${{ github.workspace }}/terraform_gcp/scripts
+        run: bash  $SCRIPT_DIR/create-bucket.sh
           
       - name: terraform init
         run: terraform init
@@ -63,7 +55,7 @@ jobs:
       
       - name: terraform apply 
         if: "!contains(github.event.head_commit.message, 'destroy')"
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -lock=false
 
       - name: Terraform Destroy
         if: contains(github.event.head_commit.message, 'destroy')
