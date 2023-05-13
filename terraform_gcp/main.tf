@@ -1,5 +1,3 @@
-
-
 resource "google_compute_subnetwork" "vpc_subnetwork" {
   name                     = "${var.def_name}-subnetwork-${var.zone_prj}"
   ip_cidr_range            = var.local_ip_range
