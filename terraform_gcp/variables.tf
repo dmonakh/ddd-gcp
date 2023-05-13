@@ -2,7 +2,7 @@ variable "def_name" {
   default = "mondyspout"
 }
 
-variable "project_id" {}
+# variable "project_id" {}
 
 variable "region_prj" {
   default = "us-central1"

@@ -74,11 +74,11 @@ resource "google_container_cluster" "k8s_cluster" {
     google_compute_subnetwork.vpc_subnetwork
   ]
 }
-output "cluster_endpoint" {
-  value = google_container_cluster.k8s_cluster.endpoint
-}
+# output "cluster_endpoint" {
+#   value = google_container_cluster.k8s_cluster.endpoint
+# }
 
-output "cluster_credentials" {
-  value     = google_container_cluster.k8s_cluster.master_auth
-  sensitive = true
-}
+# output "cluster_credentials" {
+#   value     = google_container_cluster.k8s_cluster.master_auth
+#   sensitive = true
+# }
