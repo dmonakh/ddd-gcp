@@ -2,7 +2,9 @@ variable "def_name" {
   default = "mondyspout"
 }
 
-# variable "project_id" {}
+variable "project_id" {
+  default = "$ARM_GCP_PROJECT_ID"
+}
 
 variable "region_prj" {
   default = "us-central1"

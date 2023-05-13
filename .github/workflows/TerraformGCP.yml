@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  ARM_GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   BUCKET_NAME: mondybucketgcp
   SA_NAME: git-490@tidy-vent-384809.iam.gserviceaccount.com 
 
