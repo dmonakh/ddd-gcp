@@ -3,7 +3,7 @@ variable "def_name" {
 }
 
 variable "project_id" {
-  default = "${var.GCP_PROJECT_ID}"
+  default = "${secrets.GCP_PROJECT_ID}"
 }
 
 variable "region_prj" {
