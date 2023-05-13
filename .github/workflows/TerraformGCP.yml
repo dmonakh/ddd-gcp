@@ -52,17 +52,17 @@ jobs:
       - name: terraform init
         run: terraform init
 
-      - name: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
+      - name: terraform plan
         id: plan
         run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
       
       - name: terraform apply 
         if: "!contains(github.event.head_commit.message, 'destroy')"
-        run: terraform apply 
+        run: terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -auto-approve
 
       - name: Terraform Destroy
         if: contains(github.event.head_commit.message, 'destroy')
-        run: terraform destroy 
+        run: terraform destroy -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -auto-approve
 
 
 
